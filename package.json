@@ -1,0 +1,19 @@
+{
+  "name": "cs174-hw5",
+  "version": "1.0.0",
+  "description": "Group Members: Nick Tang (014274559), Tiffany Phan, Ethan DeGuzman",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nickltang/CS174-HW5.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nickltang/CS174-HW5/issues"
+  },
+  "homepage": "https://github.com/nickltang/CS174-HW5#readme"
+}
