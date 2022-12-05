@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from 'react-router-dom'
 import axios from "axios";
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
@@ -12,7 +13,9 @@ const Login = () => {
     // const [variableName, variableSetter] = useState(<default value>)
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const [loginStatus, setLoginStatus] = useState("");
+    const [errorMessage, setErrorMessage] = useState(false);
+    const navigate = useNavigate();
+
   
     const register = () => {
         axios.post("http://localhost:8888/register", {
@@ -34,16 +37,21 @@ const Login = () => {
                 //      ...
                 // }
             // }
-            if (response.data.message) {
-                setLoginStatus(response.data.message);
+            if (response.data.userID === -1) {
+                setErrorMessage(true);
             } else {
-                setLoginStatus(response.data[0].username);
+                // Save to memory
+                localStorage.setItem('userID', response.data.userID)
+                navigate('/refineDate')
             }
+        }).catch((err) => {
+            console.log(err)
         });
     };
   
     return (
         <Container>
+            <h1 className="text-center mb-4">Welcome to DateMatcher</h1>
             <Row>
                 <Form >
                     <Form.Group 
@@ -77,6 +85,10 @@ const Login = () => {
                         />
                     </Form.Group>
                     <div className="text-center mt-4">
+                        { errorMessage ? 
+                            <p style={{color: 'red'}}>Email and password combination incorrect</p>
+                            : <></>
+                        }
                         <Button 
                             variant="primary" 
                             // size="lg"
