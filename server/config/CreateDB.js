@@ -17,26 +17,29 @@ db.connect((err) => {
     console.log('Connected to MySQL Server')
     
     // Create Database
-    const createDatabase = `CREATE DATABASE IF NOT EXISTS ${config.DB_NAME};`
-    db.query(createDatabase, (err, results, fields) => {
+    db.query(`CREATE DATABASE IF NOT EXISTS ${config.DB_NAME};`, (err, results, fields) => {
         if (err) {
             console.log(err.message)
         }
     })
 
-    // Create Tables
-    const createUserTable = 
-        ` USE ${config.DB_NAME};
+    // Use Database
+    db.query(`USE ${config.DB_NAME};`, (err, results, fields) => {
+        if (err) {
+            console.log(err.message)
+        }
+    })
 
-        CREATE TABLE userData (
+    const createTableQuery = `
+        CREATE TABLE IF NOT EXISTS users (
             id INT UNSIGNED NOT NULL AUTO_INCREMENT,
             username VARCHAR(255) NOT NULL,
             name VARCHAR(255) NOT NULL,
             password VARCHAR(255) NOT NULL,
-            answers VARCHAR(255) NOT NULL,
             PRIMARY KEY (id)
-        );`
-    db.query(createUserTable, (err, results, fields) => {
+        ); 
+    `
+    db.query(createTableQuery, (err, results, fields) => {
         if (err) {
             console.log(err.message)
         }
