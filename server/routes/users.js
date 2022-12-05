@@ -1,5 +1,5 @@
 const express = require('express'),
-    mysql = require("mysql")
+    mysql = require("mysql2")
 
 const router = express.Router()
 
@@ -8,7 +8,7 @@ const db = mysql.createConnection({
     user: "root",
     host: "localhost",
     password: "password",
-    database: "dateMatch",
+    database: "homework5",
 });
 
 
@@ -19,13 +19,15 @@ router.post('/login', (req, res) => {
     const username = req.body.username;
     const password = req.body.password;
 
-    // db.query(
-    //     "INSERT INTO users (username, password) VALUES (?, ?)",
-    //     [username, password],
-    //     (err, result) => {
-    //         console.log(err);
-    //     }
-    // );
+    db.query(
+        "SELECT * FROM users WHERE username = ? AND password = ?",
+        [username, password],
+        (err, result) => {
+            if(err)
+                return console.log(err)
+            console.log(result)
+        }
+    );
 })
 
 // POST /register
@@ -36,13 +38,15 @@ router.post('/createAccount', (req, res) => {
     const password = req.body.password
     const answers = req.body.answers
 
-    // db.query(
-    //     "INSERT INTO users (username, password, answers) VALUES (?, ?, ?)",
-    //     [username, password, answers],
-    //     (err, result) => {
-    //         console.log(err);
-    //     }
-    // );
+    db.query(
+        "INSERT INTO users (username, password, answers) VALUES (?, ?, ?)",
+        [username, password, answers],
+        (err, result) => {
+            if(err)
+                return console.log(err)
+            console.log(result)
+        }
+    );
 })
 
 // POST /getSuggestion
