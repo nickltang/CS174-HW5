@@ -13,7 +13,7 @@ function App() {
   return (
     <div>
       <Navigation />
-      <Container className="justify-content-md-center mt-3" style={{width: "60%"}}>
+      <Container className="justify-content-md-center mt-3" style={{width: "50%"}}>
         <Router>
           <Routes>
             <Route path="/" element={<Login />} />

@@ -126,7 +126,7 @@ const Login = () => {
                     <Button 
                         className="mx-2"
                         size="sm"
-                        href="#"
+                        href="/create-account"
                         variant="outline-secondary"                    
                     >
                         Create Account
@@ -134,7 +134,7 @@ const Login = () => {
                     <Button 
                         className="mx-2"
                         size="sm"
-                        href="#"
+                        href="/login-vulnerable"
                         variant='outline-secondary'
                     >
                         Vulnerable Login
