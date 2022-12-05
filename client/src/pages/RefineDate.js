@@ -8,6 +8,7 @@ import ListGroup from 'react-bootstrap/ListGroup'
 import Accordion from 'react-bootstrap/Accordion'
 import { useNavigate } from 'react-router-dom'
 import pfp from '../default-pfp.jpeg'
+import axios from "axios"
 
 const questionsList = [
     'question 1',
@@ -25,13 +26,11 @@ const questionsList = [
 const RefineDate = () => {
     const [dateOption, setDateOption] = useState({
         name: "Joe Shmoe",
-        email: "joe@gmail.com",
+        username: "joe@gmail.com",
         answers: [0, 1, 0, 0, 0, 1, 1, 1, 0, 1]
     })
     // const [dateOption, setDateOption] = useState()
     const [showEmail, setShowEmail] = useState(false)
-
-    const navigate = useNavigate()
 
 
     useEffect(() => {
@@ -41,24 +40,52 @@ const RefineDate = () => {
         // }
 
         // Get date suggestion
-
+        const data = {
+            userName: 'bobsmith@gmail.com'
+            // userName: localStorage.getItem('userID')
+        }
+        axios.post('http://localhost:8888/getSuggestion', data).then((res) => {
+            console.log(res.data)
+        })
+        
         
     },[])
 
-
+    // TO DO: post to /suggestMore
     const handleMore = () => {
-        console.log('Clicked More')
+        const data = {
+            dateName: dateOption.username,
+            userName: 'bobsmith@gmail.com'
+            // userName: localStorage.getItem('userID')
+        }
+        axios.post('http://localhost:8888/suggestMore', data).then((res) => {
+            console.log(res.data)
+        })
     }
 
-
+    // TO DO: post to /suggestLess
     const handleLess = () => {
-        console.log('Clicked Less')
-
+        const data = {
+            dateName: dateOption.username,
+            userName: 'bobsmith@gmail.com'
+            // userName: localStorage.getItem('userID')
+        }
+        axios.post('http://localhost:8888/suggestLess', data).then((res) => {
+            console.log(res.data)
+        })
     }
 
+    // TO DO: post to /resetSuggestions
     const handleReset = () => {
-        console.log('Reset')
+        const data = {
+            userName: 'bobsmith@gmail.com'
+            // userName: localStorage.getItem('userID')
+        }
+        axios.post('http://localhost:8888/resetSuggestions', data).then((res) => {
+            console.log(res.data)
+        })
     }
+
 
     const showAnswers = () => {
         
@@ -71,6 +98,7 @@ const RefineDate = () => {
 
         return <ListGroup className="list-group-flush">{questionsDisplay}</ ListGroup>
     }
+
 
     if(dateOption === {} || dateOption === undefined || dateOption === null) {
         return (

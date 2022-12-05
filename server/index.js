@@ -1,6 +1,10 @@
-const express = require("express");
-const mysql = require("mysql");
-const cors = require("cors");
+// Imports
+const express = require("express"),
+    mysql = require("mysql2"),
+    cors = require("cors"),
+    userRouter = require('./routes/users')
+
+
 const app = express();
 
 app.use(express.json());
@@ -10,42 +14,16 @@ const db = mysql.createConnection({
     user: "root",
     host: "localhost",
     password: "password",
-    database: "LoginSystem",
+    database: "dateMatch",
 });
 
-app.post("/register", (req, res) => {
-    const username = req.body.username;
-    const password = req.body.password;
 
-    db.query(
-        "INSERT INTO users (username, password) VALUES (?, ?)",
-        [username, password],
-        (err, result) => {
-            console.log(err);
-        }
-    );
-});
+app.use('/', userRouter)
 
-app.post('/login', (req, res)=> {
-    const username = req.body.username;
-    const password = req.body.password;
 
-    db.query(
-        "SELECT * FROM users WHERE username = ? AND password = ?",
-        [username, password],
-        (err, result) => {
-            if (err) {
-                res.send({err: err});
-            }
-            if (result > 0) {
-                res.send(result);
-            } else {
-                res.send({ message : "Wrong user/pass combination!" });
-            }
-        }
-    );
-});
-
-app.listen(8888, () => {
-    console.log("Running server");
+app.listen(8888, (error) => {
+    if(!error)
+        console.log("Server is up and listening on port 8888...")
+    else
+        console.log("Error occured, server couldn't start", error)
 })

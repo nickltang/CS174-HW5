@@ -13,6 +13,7 @@ const CreateAccount = () => {
     // Priority 1: Need fields for password (string) and questions ([0, 1, 0, 1, ...])
     const [usernameCreate, setEmail] = useState("");
     const [passwordCreate, setPassword] = useState("");
+    const [nameCreate, setName] = useState("")
     const [answersArray, setAnswers] = useState(["-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1"]);
 
     const navigate = useNavigate();
@@ -28,13 +29,14 @@ const CreateAccount = () => {
             }
         }
 
-        if (usernameCreate.length === 0 || passwordCreate.length === 0){
-            alert("Please enter your email and password");
+        if (usernameCreate.length === 0 || passwordCreate.length === 0 || nameCreate.length === 0){
+            alert("Please enter your name, email, and password");
             return;
         }
 
         //post if form is validated:
         axios.post("http://localhost:8888/createAccount", {
+            name: nameCreate,
             username: usernameCreate,
             password: passwordCreate,
             questions: answersArray,
@@ -51,6 +53,19 @@ const CreateAccount = () => {
         <Row>
             <h1>Create an Account</h1>
             <Form className="mt-3">
+                <Form.Group 
+                    className="mb-3" 
+                    controlId="formBasicText"
+                >
+                    <Form.Label>Name</Form.Label>
+                    <Form.Control 
+                        type="text" 
+                        placeholder="Enter your name" 
+                        onChange={(e) => {
+                            setName(e.target.value);
+                        }}
+                    />
+                </Form.Group>
                 <Form.Group 
                     className="mb-3" 
                     controlId="formBasicEmail"
