@@ -10,8 +10,6 @@ const LoginVulnerable = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [loginStatus, setLoginStatus] = useState("");
-  
-
     const login = () => {
         axios.post("http://localhost:8888/login", {
         username: username,
@@ -24,6 +22,15 @@ const LoginVulnerable = () => {
           setLoginStatus(response.data[0].username);
         }
       });
+    }
+
+    const vulLogin = () => {
+        if (username.length === 0 || password.length === 0){
+            alert("Please enter your email and password");
+            return;
+        }
+
+        window.location = "https://www.youtube.com/watch?v=01e5SAvJfpg";
     };
 
 
@@ -63,9 +70,9 @@ const LoginVulnerable = () => {
                 <div className="text-center">
                     <Button 
                         variant="primary" 
-                        onClick={login}
+                        onClick={vulLogin}
                     >
-                        Log In
+                        Login
                     </Button>
                 </div>
                 
