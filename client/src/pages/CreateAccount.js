@@ -6,15 +6,45 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
+import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom'
 
 const CreateAccount = () => {
     // Priority 1: Need fields for password (string) and questions ([0, 1, 0, 1, ...])
-    const [email, setEmail] = useState("")
+    const [usernameCreate, setEmail] = useState("");
+    const [passwordCreate, setPassword] = useState("");
+    const [answersArray, setAnswers] = useState(["-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1"]);
+
+    const navigate = useNavigate();
 
     // Priority 2: Need an onclick function to check that all fields are filled out, then POST all fields to backend
-    // url endpoint: http://localhost:8888/createAccount
+    // url endpoint: http://localhost:8888/createAccount 
     const createAcc = () => {
+        // validate form
+        for (let answer of answersArray){
+            if (answer === "-1"){
+                alert("Please answer all the questions.");
+                return;
+            }
+        }
 
+        if (usernameCreate.length === 0 || passwordCreate.length === 0){
+            alert("Please enter your email and password");
+            return;
+        }
+
+        //post if form is validated:
+        axios.post("http://localhost:8888/createAccount", {
+            username: usernameCreate,
+            password: passwordCreate,
+            questions: answersArray,
+        }).then((response) => {
+            //save to memory
+            localStorage.setItem('userInfo', response.data.userInfo)
+            navigate('/login')
+        }).catch((err) => {
+            console.log(err);
+        });        
     }
 
     return (
@@ -30,7 +60,7 @@ const CreateAccount = () => {
                         type="email" 
                         placeholder="Enter your email" 
                         onChange={(e) => {
-                            setEmail(e.target.value)
+                            setEmail(e.target.value);
                         }}
                     />
                 </Form.Group>
@@ -40,9 +70,10 @@ const CreateAccount = () => {
                 >
                     <Form.Label>Password</Form.Label>
                     <Form.Control 
-                        type="text" 
+                        type="text"
                         placeholder="Create a Password" 
                         onChange={(e) => {
+                            setPassword(e.target.value)
                         }}
                     />
                 </Form.Group>
@@ -51,11 +82,17 @@ const CreateAccount = () => {
                     <Row className='my-2'>
                         <Col>
                             <Form.Label>
-                                Question 1  
+                                1. Do you like cooking? 
                             </Form.Label>            
                         </Col>
                         <Col>
-                            <Form.Select onChange={(e) => { }}>
+                            <Form.Select onChange={(e) => { 
+                                const temp = answersArray;
+                                temp[0] = e.target.value;   
+                                console.log(temp);                         
+                                setAnswers(temp);
+
+                            }}>
                                 <option>--</option>
                                 <option value="1">Yes</option>
                                 <option value="0">No</option>
@@ -65,11 +102,35 @@ const CreateAccount = () => {
                     <Row className='my-2'>
                         <Col>
                             <Form.Label>
-                                Question 2  
+                                2. Do you like video games?  
                             </Form.Label>            
                         </Col>
                         <Col>
-                            <Form.Select>
+                            <Form.Select onChange={(e) => { 
+                                const temp = answersArray;
+                                temp[1] = e.target.value;   
+                                console.log(temp);                                                      
+                                setAnswers(temp);
+                            }}>
+                                <option>--</option>
+                                <option value= "1" >Yes</option>
+                                <option value="0">No</option>
+                            </Form.Select>            
+                        </Col>
+                    </Row>
+                    <Row className='my-2'>
+                        <Col>
+                            <Form.Label>
+                                3. Are you a morning person?    
+                            </Form.Label>            
+                        </Col>
+                        <Col>
+                            <Form.Select onChange={(e) => { 
+                                const temp = answersArray;
+                                temp[2] = e.target.value;  
+                                console.log(temp);                                                       
+                                setAnswers(temp);
+                            }}>
                                 <option>--</option>
                                 <option value="1">Yes</option>
                                 <option value="0">No</option>
@@ -79,11 +140,17 @@ const CreateAccount = () => {
                     <Row className='my-2'>
                         <Col>
                             <Form.Label>
-                                Question 3  
+                                4. Do you have any pets?   
                             </Form.Label>            
                         </Col>
                         <Col>
-                            <Form.Select>
+                            <Form.Select onChange={(e) => { 
+                                const temp = answersArray;
+                                temp[3] = e.target.value;  
+                                console.log(temp);                         
+                              
+                                setAnswers(temp);
+                            }}>
                                 <option>--</option>
                                 <option value="1">Yes</option>
                                 <option value="0">No</option>
@@ -93,11 +160,17 @@ const CreateAccount = () => {
                     <Row className='my-2'>
                         <Col>
                             <Form.Label>
-                                Question 4  
+                                5. Do you like to read?   
                             </Form.Label>            
                         </Col>
                         <Col>
-                            <Form.Select>
+                            <Form.Select onChange={(e) => { 
+                                const temp = answersArray;
+                                temp[4] = e.target.value;  
+                                console.log(temp);                         
+                              
+                                setAnswers(temp);
+                            }}>
                                 <option>--</option>
                                 <option value="1">Yes</option>
                                 <option value="0">No</option>
@@ -107,11 +180,17 @@ const CreateAccount = () => {
                     <Row className='my-2'>
                         <Col>
                             <Form.Label>
-                                Question 5  
+                                6. Do you like to travel?    
                             </Form.Label>            
                         </Col>
                         <Col>
-                            <Form.Select>
+                            <Form.Select onChange={(e) => { 
+                                const temp = answersArray;
+                                temp[5] = e.target.value;  
+                                console.log(temp);                         
+                              
+                                setAnswers(temp);
+                            }}>
                                 <option>--</option>
                                 <option value="1">Yes</option>
                                 <option value="0">No</option>
@@ -121,11 +200,17 @@ const CreateAccount = () => {
                     <Row className='my-2'>
                         <Col>
                             <Form.Label>
-                                Question 6  
+                                7. Do you have siblings?   
                             </Form.Label>            
                         </Col>
                         <Col>
-                            <Form.Select>
+                            <Form.Select onChange={(e) => { 
+                                const temp = answersArray;
+                                temp[6] = e.target.value;  
+                                console.log(temp);                         
+                              
+                                setAnswers(temp);
+                            }}>
                                 <option>--</option>
                                 <option value="1">Yes</option>
                                 <option value="0">No</option>
@@ -135,11 +220,17 @@ const CreateAccount = () => {
                     <Row className='my-2'>
                         <Col>
                             <Form.Label>
-                                Question 7  
+                                8. Are you religious?   
                             </Form.Label>            
                         </Col>
                         <Col>
-                            <Form.Select>
+                            <Form.Select onChange={(e) => { 
+                                const temp = answersArray;
+                                temp[7] = e.target.value;   
+                                console.log(temp);                         
+                             
+                                setAnswers(temp);
+                            }}>
                                 <option>--</option>
                                 <option value="1">Yes</option>
                                 <option value="0">No</option>
@@ -149,11 +240,17 @@ const CreateAccount = () => {
                     <Row className='my-2'>
                         <Col>
                             <Form.Label>
-                                Question 8  
+                               9. Do you like horror movies?  
                             </Form.Label>            
                         </Col>
                         <Col>
-                            <Form.Select>
+                            <Form.Select onChange={(e) => { 
+                                const temp = answersArray;
+                                temp[8] = e.target.value;   
+                                console.log(temp);                         
+                             
+                                setAnswers(temp);
+                            }}>
                                 <option>--</option>
                                 <option value="1">Yes</option>
                                 <option value="0">No</option>
@@ -163,25 +260,17 @@ const CreateAccount = () => {
                     <Row className='my-2'>
                         <Col>
                             <Form.Label>
-                                Question 9  
+                               10. Do you have any tattoos?   
                             </Form.Label>            
                         </Col>
                         <Col>
-                            <Form.Select>
-                                <option>--</option>
-                                <option value="1">Yes</option>
-                                <option value="0">No</option>
-                            </Form.Select>            
-                        </Col>
-                    </Row>
-                    <Row className='my-2'>
-                        <Col>
-                            <Form.Label>
-                                Question 10  
-                            </Form.Label>            
-                        </Col>
-                        <Col>
-                            <Form.Select>
+                            <Form.Select onChange={(e) => { 
+                                const temp = answersArray;
+                                temp[9] = e.target.value;   
+                                console.log(temp);                         
+                             
+                                setAnswers(temp);
+                            }}>
                                 <option>--</option>
                                 <option value="1">Yes</option>
                                 <option value="0">No</option>
@@ -191,7 +280,12 @@ const CreateAccount = () => {
                 </Form.Group>
                 
                 <div className="text-center my-5">
-                    <Button variant="primary" onClick={createAcc}>Create Account</Button>
+                    <Button 
+                        variant="primary" 
+                        onClick={createAcc}
+                    >
+                        Create Account
+                    </Button>
                 </div>
                 
             </Form>    

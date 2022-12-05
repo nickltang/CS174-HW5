@@ -27,6 +27,11 @@ const Login = () => {
     };
   
     const login = () => {
+        if (username.length === 0 || password.length === 0){
+            alert("Please enter your email and password");
+            return;
+        }
+
         axios.post("http://localhost:8888/login", {
             username: username,
             password: password,
@@ -42,7 +47,7 @@ const Login = () => {
             } else {
                 // Save to memory
                 localStorage.setItem('userID', response.data.userID)
-                navigate('/refineDate')
+                navigate('/refine-date')
             }
         }).catch((err) => {
             console.log(err)
