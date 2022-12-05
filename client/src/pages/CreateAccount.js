@@ -8,7 +8,14 @@ import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
 
 const CreateAccount = () => {
+    // Priority 1: Need fields for password (string) and questions ([0, 1, 0, 1, ...])
+    const [email, setEmail] = useState("")
 
+    // Priority 2: Need an onclick function to check that all fields are filled out, then POST all fields to backend
+    // url endpoint: http://localhost:8888/createAccount
+    const createAcc = () => {
+
+    }
 
     return (
         <Row>
@@ -23,6 +30,7 @@ const CreateAccount = () => {
                         type="email" 
                         placeholder="Enter your email" 
                         onChange={(e) => {
+                            setEmail(e.target.value)
                         }}
                     />
                 </Form.Group>
@@ -47,7 +55,7 @@ const CreateAccount = () => {
                             </Form.Label>            
                         </Col>
                         <Col>
-                            <Form.Select>
+                            <Form.Select onChange={(e) => { }}>
                                 <option>--</option>
                                 <option value="1">Yes</option>
                                 <option value="0">No</option>
@@ -183,7 +191,7 @@ const CreateAccount = () => {
                 </Form.Group>
                 
                 <div className="text-center my-5">
-                    <Button variant="primary">Create Account</Button>
+                    <Button variant="primary" onClick={createAcc}>Create Account</Button>
                 </div>
                 
             </Form>    
