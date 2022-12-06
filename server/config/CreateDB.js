@@ -30,18 +30,30 @@ db.connect((err) => {
         }
     })
 
-    const createTableQuery = `
-        CREATE TABLE IF NOT EXISTS users (
-            id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-            username VARCHAR(255) NOT NULL,
-            name VARCHAR(255) NOT NULL,
-            password VARCHAR(255) NOT NULL,
-            PRIMARY KEY (id)
-        ); 
-    `
-    db.query(createTableQuery, (err, results, fields) => {
+    // Drop table if exists to start with clean database
+    db.query(`DROP TABLE IF EXISTS users;`, (err, results, fields) => {
         if (err) {
             console.log(err.message)
+        }
+    })
+
+
+    // Create users table
+    const createUsersTable = `
+        CREATE TABLE users (
+            id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+            username VARCHAR(64) NOT NULL,
+            name VARCHAR(64) NOT NULL,
+            password VARCHAR(64) NOT NULL,
+            answers VARCHAR(512),
+            score int UNSIGNED,
+            PRIMARY KEY (id)
+        );`
+    db.query(createUsersTable, (err, results, fields) => {
+        if (err) {
+            console.log(err.message)
+        } else {
+
         }
     })
 

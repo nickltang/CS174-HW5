@@ -35,12 +35,18 @@ router.post('/createAccount', (req, res) => {
     console.log('POST /createAccount', req.body)
 
     const username = req.body.username
+    const name = req.body.name
     const password = req.body.password
     const answers = req.body.answers
 
+    // Answers should come in as a string?
+    // Convert to score according to requirements
+    console.log(answers)
+    const score = ""
+
     db.query(
-        "INSERT INTO users (username, password, answers) VALUES (?, ?, ?)",
-        [username, password, answers],
+        "INSERT INTO users (username, name, password, answers) VALUES (?, ?, ?, ?)",
+        [username, name, password, answers],
         (err, result) => {
             if(err)
                 return console.log(err)

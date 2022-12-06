@@ -14,7 +14,7 @@ const CreateAccount = () => {
     const [usernameCreate, setEmail] = useState("");
     const [passwordCreate, setPassword] = useState("");
     const [nameCreate, setName] = useState("")
-    const [answersArray, setAnswers] = useState(["-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1"]);
+    const [answersArray, setAnswers] = useState([-1, -1, -1, -1, -1, -1, -1, -1, -1, -1]);
 
     const navigate = useNavigate();
 
@@ -23,7 +23,7 @@ const CreateAccount = () => {
     const createAcc = () => {
         // validate form
         for (let answer of answersArray){
-            if (answer === "-1"){
+            if (answer === -1){
                 alert("Please answer all the questions.");
                 return;
             }
@@ -34,12 +34,14 @@ const CreateAccount = () => {
             return;
         }
 
+        console.log(JSON.stringify(answersArray))
+        
         //post if form is validated:
         axios.post("http://localhost:8888/createAccount", {
             name: nameCreate,
             username: usernameCreate,
             password: passwordCreate,
-            questions: answersArray,
+            answers: JSON.stringify(answersArray),
         }).then((response) => {
             //save to memory
             localStorage.setItem('userInfo', response.data.userInfo)
@@ -103,7 +105,7 @@ const CreateAccount = () => {
                         <Col>
                             <Form.Select onChange={(e) => { 
                                 const temp = answersArray;
-                                temp[0] = e.target.value;   
+                                temp[0] = parseInt(e.target.value);   
                                 console.log(temp);                         
                                 setAnswers(temp);
 
@@ -123,7 +125,7 @@ const CreateAccount = () => {
                         <Col>
                             <Form.Select onChange={(e) => { 
                                 const temp = answersArray;
-                                temp[1] = e.target.value;   
+                                temp[1] = parseInt(e.target.value); 
                                 console.log(temp);                                                      
                                 setAnswers(temp);
                             }}>
@@ -142,7 +144,7 @@ const CreateAccount = () => {
                         <Col>
                             <Form.Select onChange={(e) => { 
                                 const temp = answersArray;
-                                temp[2] = e.target.value;  
+                                temp[2] = parseInt(e.target.value); 
                                 console.log(temp);                                                       
                                 setAnswers(temp);
                             }}>
@@ -161,7 +163,7 @@ const CreateAccount = () => {
                         <Col>
                             <Form.Select onChange={(e) => { 
                                 const temp = answersArray;
-                                temp[3] = e.target.value;  
+                                temp[3] = parseInt(e.target.value);  
                                 console.log(temp);                         
                               
                                 setAnswers(temp);
@@ -181,7 +183,7 @@ const CreateAccount = () => {
                         <Col>
                             <Form.Select onChange={(e) => { 
                                 const temp = answersArray;
-                                temp[4] = e.target.value;  
+                                temp[4] = parseInt(e.target.value);  
                                 console.log(temp);                         
                               
                                 setAnswers(temp);
@@ -201,7 +203,7 @@ const CreateAccount = () => {
                         <Col>
                             <Form.Select onChange={(e) => { 
                                 const temp = answersArray;
-                                temp[5] = e.target.value;  
+                                temp[5] = parseInt(e.target.value); 
                                 console.log(temp);                         
                               
                                 setAnswers(temp);
@@ -221,7 +223,7 @@ const CreateAccount = () => {
                         <Col>
                             <Form.Select onChange={(e) => { 
                                 const temp = answersArray;
-                                temp[6] = e.target.value;  
+                                temp[6] = parseInt(e.target.value);  
                                 console.log(temp);                         
                               
                                 setAnswers(temp);
@@ -241,7 +243,7 @@ const CreateAccount = () => {
                         <Col>
                             <Form.Select onChange={(e) => { 
                                 const temp = answersArray;
-                                temp[7] = e.target.value;   
+                                temp[7] = parseInt(e.target.value);    
                                 console.log(temp);                         
                              
                                 setAnswers(temp);
@@ -261,7 +263,7 @@ const CreateAccount = () => {
                         <Col>
                             <Form.Select onChange={(e) => { 
                                 const temp = answersArray;
-                                temp[8] = e.target.value;   
+                                temp[8] = parseInt(e.target.value);   
                                 console.log(temp);                         
                              
                                 setAnswers(temp);
@@ -281,7 +283,7 @@ const CreateAccount = () => {
                         <Col>
                             <Form.Select onChange={(e) => { 
                                 const temp = answersArray;
-                                temp[9] = e.target.value;   
+                                temp[9] = parseInt(e.target.value);    
                                 console.log(temp);                         
                              
                                 setAnswers(temp);
