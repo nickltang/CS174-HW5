@@ -38,6 +38,7 @@ router.post('/login', (req, res) => {
     )
 })
 
+
 // POST /createAccount
 router.post('/createAccount', (req, res) => {
     console.log('POST /createAccount', req.body)
@@ -47,8 +48,6 @@ router.post('/createAccount', (req, res) => {
     const password = req.body.password
     const answers = JSON.parse(req.body.answers)
 
-    // Answers should come in as a string?
-    // Convert to score according to requirements
     const score = (answers.reduce((a, b) => a + b, 0)) / 10
     console.log('score: ', score)
 
@@ -70,6 +69,7 @@ router.post('/createAccount', (req, res) => {
     )
 })
 
+
 // POST /getUserInfo
 router.post('/getUserInfo', (req, res) => {
     console.log('POST /getUserInfo', req.body)
@@ -90,36 +90,64 @@ router.post('/getUserInfo', (req, res) => {
     );
 })
 
+
 // POST /getSuggestion
 router.post('/getSuggestion', (req, res) => {
     console.log('POST /getSuggestion', req.body)
 
     const id = parseInt(req.body.id)
+
     db.promise().query(`SELECT score FROM users WHERE id=${id}`).then(([rows, fields]) => {
         const score = rows[0].score
 
-        console.log('score ', score)
-        // Query for closest number
         db.promise().query(`SELECT id FROM users ORDER BY ABS(score - ${score}) ASC`).then(([rows,fields]) => {
-            console.log(rows)
-        }).catch(console.log)
-    }).catch(console.log)
+            const closestIDs = []
+            rows.map((obj) => {
+                closestIDs.push(obj.id)
+            })
 
-    
-    const dummySuggestion = {
-        name: "Bob Jones",
-        username: "BobJonesMacDaddy@hotmail.com",
-        answers: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
-    }
+            return closestIDs
+        }).then((closestIDs) => {
+            db.promise().query(`SELECT suggested_id FROM suggestions WHERE user_id = ${id}`).then(([rows, fields]) => {
+                const usedIDs = []
+                rows.map((obj) => {
+                    usedIDs.push(obj.suggested_id)
+                })
 
-    res.status(200).send({userInfo: dummySuggestion})
+                console.log('used IDs', usedIDs)
+                console.log('closest IDs before', closestIDs)
+
+                closestIDs = closestIDs.filter(thisID => !usedIDs.includes(thisID))
+
+                console.log('filtered IDs after', closestIDs)
+
+                
+                // First closest score to our user in DB is our user, so take next closest ID
+                const closest = closestIDs[1]
+
+                if(closest === undefined || closest === null) {
+                    console.log("Out of suggestions!")
+                    res.status(200).send({userInfo: -1})
+                } else {
+                    db.promise().query(`INSERT suggestions (user_id, suggested_id) VALUES (${id}, ${closest})`)
+                    .then(() => db.promise().query(`SELECT * FROM users WHERE id = ${closest}`)).then(([rows, fields]) => {
+                        console.log(rows)
+                        res.status(200).send({userInfo: rows[0]})
+                    })
+                }
+
+                
+            })
+        })
+    })
 })
+
 
 // POST /suggestMore
 router.post('/suggestMore', (req, res) => {
     console.log('POST /suggestMore', req.body)
 
-    const user_id = req.body.user_id
+    const user_id = JSON.parse(req.body.user_id)
     const suggested_id = req.body.suggested_id
 
     const user_score = db.promise().query(`SELECT score FROM users WHERE id=${user_id}`).then(([rows, fields]) => rows[0].score)
@@ -134,6 +162,7 @@ router.post('/suggestMore', (req, res) => {
         res.status(200).send({message: `User ${user_id}'s score changed to ${newScore}`})
     })
 })
+
 
 // POST /suggestLess
 router.post('/suggestLess', (req, res) => {
@@ -155,21 +184,21 @@ router.post('/suggestLess', (req, res) => {
     })
 })
 
+
 // POST /resetSuggestions
 router.post('/resetSuggestions', (req, res) => {
     console.log('POST /resetSuggestions', req.body)
 
-    const username = req.body.username
-    const password = req.body.password
-    const answers = req.body.answers
+    const user_id = req.body.user_id
 
-    // db.query(
-    //     "INSERT INTO users (username, password, answers) VALUES (?, ?, ?)",
-    //     [username, password, answers],
-    //     (err, result) => {
-    //         console.log(err);
-    //     }
-    // );
+    db.query(
+        `DELETE FROM suggestions WHERE user_id = ${user_id}`,
+        (err, result) => {
+            console.log(err);
+        }
+    );
+
+    res.status(200).send({message: `User ${user_id}'s suggestions history was cleared.`})
 })
 
 
