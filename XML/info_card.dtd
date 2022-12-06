@@ -1,0 +1,7 @@
+<?xml version = "1.0" encoding ="utf-8" ?>
+<!ELEMENT info_card (user+) >
+<!ELEMENT user (name, address, quiz_response) >
+<!ELEMENT name (#PCDATA)>
+<!ELEMENT address (#PCDATA)>
+<!ELEMENT quiz_response (#PCDATA)>
+<!ATTLIST id quiz_response CDATA #REQUIRED >

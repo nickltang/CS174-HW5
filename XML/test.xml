@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE info_card SYSTEM "info_card.dtd">
+<info_card>
+    <user>
+        <name>First Last</name>
+        <address> first.last@sjsu.edu </address>
+        <quiz_response id = "0"> 0 </quiz_response> 
+        <quiz_response id = "1"> 1 </quiz_response>
+        <quiz_response id = "2"> 0 </quiz_response> 
+        <quiz_response id = "3"> 0 </quiz_response> 
+        <quiz_response id = "4"> 0 </quiz_response> 
+        <quiz_response id = "5"> 0 </quiz_response> 
+        <quiz_response id = "6"> 0 </quiz_response> 
+        <quiz_response id = "7"> 0 </quiz_response> 
+        <quiz_response id = "8"> 0 </quiz_response> 
+        <quiz_response id = "9"> 0 </quiz_response> 
+    </user>
+
+    <user>
+        <name>First Middle Last</name>
+        <address> first.last2@sjsu.edu </address>
+        <quiz_response id = "0"> 0 </quiz_response> 
+        <quiz_response id = "1"> 1 </quiz_response>
+        <quiz_response id = "2"> 0 </quiz_response> 
+        <quiz_response id = "3"> 1 </quiz_response> 
+        <quiz_response id = "4"> 1 </quiz_response> 
+        <quiz_response id = "5"> 0 </quiz_response> 
+        <quiz_response id = "6"> 0 </quiz_response> 
+        <quiz_response id = "7"> 0 </quiz_response> 
+        <quiz_response id = "8"> 1 </quiz_response> 
+        <quiz_response id = "9"> 0 </quiz_response> 
+    </user>
+
+</info_card>
