@@ -11,21 +11,17 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   return (
-    <div>
-      <Navigation />
-      <Container className="justify-content-md-center mt-3" style={{width: "55%"}}>
-        <Router>
-          <Routes>
-            <Route path="/" element={<Login />} />
-            <Route path="/login-vulnerable" element={<LoginVulnerable />} />
-            <Route path="/create-account" element={<CreateAccount />} />
-            <Route path="/refine-date" element={<RefineDate />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </Router>    
-      </Container>
-      
-    </div>
+    <>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Login />} />
+          <Route path="/login-vulnerable" element={<LoginVulnerable />} />
+          <Route path="/create-account" element={<CreateAccount />} />
+          <Route path="/refine-date" element={<RefineDate />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </Router>          
+    </>
     
   );
 }

@@ -78,13 +78,20 @@ router.post('/getSuggestion', (req, res) => {
     const password = req.body.password
     const answers = req.body.answers
 
-    // db.query(
-    //     "INSERT INTO users (username, password, answers) VALUES (?, ?, ?)",
-    //     [username, password, answers],
-    //     (err, result) => {
-    //         console.log(err);
-    //     }
-    // );
+    const userInfo = db.query(
+        "SELECT * FROM users WHERE id = ?",
+        [id],
+        (err, result) => {
+            if(err) {
+                console.log(err)
+                return false;
+            } else {
+                return result[0]
+            }
+        }
+    )
+    
+    
 })
 
 // POST /suggestMore

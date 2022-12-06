@@ -4,7 +4,6 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Button from 'react-bootstrap/Button'
 
-
 const Navigation = () => {
   const [showSignOut, setShowSignOut] = useState(false)
 
@@ -25,7 +24,7 @@ const Navigation = () => {
       <Container>
         <Navbar.Brand onClick={signOut} href="/">DateMatcher</Navbar.Brand>
         <Nav>
-          {showSignOut ? <Button variant="outline-danger" onClick={signOut}>Sign Out</Button> : <></>}
+          {showSignOut ? <Button variant="outline-danger" onClick={signOut} href='/'>Sign Out</Button> : <></>}
         </Nav>
       </Container>
     </Navbar>
