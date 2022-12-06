@@ -12,30 +12,31 @@ import axios from "axios"
 import Navigation from "../components/Navigation"
 
 const questionsList = [
-    'question 1',
-    'question 2',
-    'question 3',
-    'question 4',
-    'question 5',
-    'question 6',
-    'question 7',
-    'question 8',
-    'question 9',
-    'question 10',
+    'Do you like cooking?',
+    'Do you like video games?',
+    'Are you a morning person?',
+    'Do you have any pets?',
+    'Do you like to read?',
+    'Do you like to travel?',
+    'Do you have siblings?',
+    'Are you religious?  ',
+    'Do you like horror movies? ',
+    'Do you have any tattoos?',
 ]
 
 const RefineDate = () => {
     const [dateOption, setDateOption] = useState({
-        name: "Joe Shmoe",
-        username: "joe@gmail.com",
-        answers: [0, 1, 0, 0, 0, 1, 1, 1, 0, 1]
+        id: "",
+        name: "",
+        username: "",
+        answers: []
     })
-    // const [dateOption, setDateOption] = useState()
     const [showEmail, setShowEmail] = useState(false)
 
     const navigate = useNavigate()
 
     useEffect(() => {
+        // if 
         if(localStorage.length === 0 ) {
             console.log('hi')
             navigate('/')
@@ -44,43 +45,42 @@ const RefineDate = () => {
         // Get date suggestion
         axios.post('http://localhost:8888/getSuggestion', {id: localStorage.getItem('userID')}).then((res) => {
             console.log(res.data)
-            
-        })
+            setDateOption({
+                id: res.data.userInfo.id,
+                name: res.data.userInfo.name,
+                username: res.data.userInfo.username,
+                answers: res.data.userInfo.answers
+            })
+        }).catch((err) => console.log(err))
     }, [])
 
-    // TO DO: post to /suggestMore
     const handleMore = () => {
         const data = {
-            dateName: dateOption.username,
-            userName: 'bobsmith@gmail.com'
-            // userName: localStorage.getItem('userID')
+            // current_id: localStorage.getItem('userID'),
+            // guest_id: dateOption.id
+
+            user_id: localStorage.getItem('userID'),
+            suggested_id: 2
         }
         axios.post('http://localhost:8888/suggestMore', data).then((res) => {
             console.log(res.data)
-        })
+        }).catch((err) => console.log(err))
     }
 
-    // TO DO: post to /suggestLess
     const handleLess = () => {
         const data = {
-            dateName: dateOption.username,
-            userName: 'bobsmith@gmail.com'
-            // userName: localStorage.getItem('userID')
+            user_id: localStorage.getItem('userID'),
+            suggested_id: 3
         }
         axios.post('http://localhost:8888/suggestLess', data).then((res) => {
             console.log(res.data)
-        })
+        }).catch((err) => console.log(err))
     }
 
-    // TO DO: post to /resetSuggestions
     const handleReset = () => {
-        const data = {
-            userName: 'bobsmith@gmail.com'
-            // userName: localStorage.getItem('userID')
-        }
-        axios.post('http://localhost:8888/resetSuggestions', data).then((res) => {
+        axios.post('http://localhost:8888/resetSuggestions', {current_id: localStorage.getItem('userID')}).then((res) => {
             console.log(res.data)
-        })
+        }).catch((err) => console.log(err))
     }
 
 
@@ -88,7 +88,7 @@ const RefineDate = () => {
         const questionsDisplay = []
         for(let i = 0; i < 10; i++) {
             questionsDisplay.push(
-                <ListGroup.Item>{questionsList[i]}: {dateOption.answers[i] === 0 ? 'No' : 'Yes'}</ListGroup.Item>
+                <ListGroup.Item>{questionsList[i]} <strong>{dateOption.answers[i] === 0 ? 'No' : 'Yes'}</strong></ListGroup.Item>
             )
         }
 

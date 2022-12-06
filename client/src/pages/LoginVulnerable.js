@@ -3,9 +3,9 @@ import axios from "axios";
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col'
-import Container from 'react-bootstrap/Container'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import Navigation from "../components/Navigation";
+import Container from "react-bootstrap/Container";
 
 
 const LoginVulnerable = () => {
@@ -38,57 +38,62 @@ const LoginVulnerable = () => {
 
 
     return (
-        <Row>
-            <Form >
-                <Form.Group 
-                    className="mb-3" 
-                    controlId="formBasicEmail"
-                >
-                    <Form.Label>Email address</Form.Label>
-                    <Form.Control 
-                        type="email" 
-                        placeholder="Enter email" 
-                        onChange={(e) => {
-                            setUsername(e.target.value);
-                        }}
-                    />
-                </Form.Group>
-                <Form.Group 
-                    className="mb-3" 
-                    controlId="formBasicPassword"
-                >
-                    <Form.Label
-                        className="text-left"
-                    >
-                        Password
-                    </Form.Label>
-                    <Form.Control 
-                        type="password" 
-                        placeholder="Password" 
-                        onChange={(e) => {
-                            setPassword(e.target.value);
-                        }}
-                    />
-                </Form.Group>
-                <div className="text-center">
-                    <OverlayTrigger
-                        placement = "bottom"
-                        trigger="click"
-                        overlay={vulLogin}
-                    >
-                        <Button 
-                            variant="primary" 
-                            onClick={login}
+        <>
+            <Navigation />
+            <Container className="justify-content-md-center mt-3" style={{width: "55%"}}>
+                <h1 className="text-center mb-4">Welcome to DateMatcher (Vulnerable)</h1>
+                <Row>
+                    <Form >
+                        <Form.Group 
+                            className="mb-3" 
+                            controlId="formBasicEmail"
                         >
-                        Login
-                        </Button>
-                    </OverlayTrigger>
-                    
-                </div>
-
-                
-            </Form>    
-        </Row>
+                            <Form.Label>Email address</Form.Label>
+                            <Form.Control 
+                                type="email" 
+                                placeholder="Enter email" 
+                                onChange={(e) => {
+                                    setUsername(e.target.value);
+                                }}
+                            />
+                        </Form.Group>
+                        <Form.Group 
+                            className="mb-3" 
+                            controlId="formBasicPassword"
+                        >
+                            <Form.Label
+                                className="text-left"
+                            >
+                                Password
+                            </Form.Label>
+                            <Form.Control 
+                                type="password" 
+                                placeholder="Password" 
+                                onChange={(e) => {
+                                    setPassword(e.target.value);
+                                }}
+                            />
+                        </Form.Group>
+                        <div className="text-center">
+                            <OverlayTrigger
+                                placement = "bottom"
+                                trigger="click"
+                                overlay={vulLogin}
+                            >
+                                <Button 
+                                    variant="primary" 
+                                    onClick={login}
+                                >
+                                Login
+                                </Button>
+                            </OverlayTrigger>
+                        </div>
+                    </Form>    
+                </Row>    
+            </Container>
+            
+        </>
+        
     )
 }
 
