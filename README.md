@@ -14,3 +14,15 @@ Group Members: Nick Tang (014274559), Tiffany Phan (014112969), Ethan DeGuzman (
 1. In your terminal, navigate to `CS174-HW5/server` and enter `nodemon index.js`.
 2. In a separate terminal window, navigate to `CS174-HW5/client` and enter `npm start`.
 3. In your browser, navigate to `localhost:3000`.
+
+## Click-Jacking
+This Login Vulnerable page contains a React-Bootstrap overlay trigger that encloses the login button. 
+When users click on the login button, they are rerouted to another webpage. 
+Users can be rerouted to a malicious webpage. However, we decided to reroute the user to a youtube video. 
+
+Instructions:
+1. Open the app
+2. Click on Login Vulnerable
+3. Input username and password
+4. Click Login
+5. User will be rerouted to another webpage (youtube) 
