@@ -26,17 +26,19 @@ router.post('/login', (req, res) => {
             if(err) {
                 res.status(400).send("Error querying user's info: ", err)
             } else {
-                console.log('userinfo: ', typeof(result))
-                if(result === []) {
-                    res.status(200).send({message: 'User not found.', userInfo: -1})
+                console.log('userinfo: ', result)
+
+                if(result === {} || result.length === 0) {
+                    res.status(200).send({message: 'User credentials not found.', userInfo: -1})
+                } else {
+                    res.status(200).send({ message: 'Successfully signed in.', userInfo: result[0]})
                 }
-                res.status(200).send({ message: 'Successfully signed in.', userInfo: result})
             }
         }
     )
 })
 
-// POST /register
+// POST /createAccount
 router.post('/createAccount', (req, res) => {
     console.log('POST /createAccount', req.body)
 
@@ -63,6 +65,7 @@ router.post('/createAccount', (req, res) => {
 
                 res.status(200).send({ message: 'Successfully added user.', userInfo: userInfo})
             }
+            res.end()
         }
     )
 })

@@ -31,7 +31,7 @@ const Login = () => {
             } else if (response.status === 400) {
                 alert("Database error. Please try again.");
             } else {
-                localStorage.setItem('userID', response.data.id)
+                localStorage.setItem('userID', response.data.userInfo.id)
                 navigate('/refine-date')
             }
         }).catch((err) => {

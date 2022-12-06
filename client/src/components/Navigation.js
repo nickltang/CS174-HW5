@@ -9,6 +9,7 @@ const Navigation = () => {
   const [showSignOut, setShowSignOut] = useState(false)
 
   useEffect(() => {
+    console.log('userID: ', localStorage.getItem('userID'))
     if(localStorage.length > 0 && localStorage.getItem('userID') !== null) {
       setShowSignOut(true)
     }
