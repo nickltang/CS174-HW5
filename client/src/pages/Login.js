@@ -7,24 +7,12 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
 
+
 const Login = () => {
-    const [usernameReg, setUsernameReg] = useState("");
-    const [passwordReg, setPasswordReg] = useState("");
-    // const [variableName, variableSetter] = useState(<default value>)
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const [errorMessage, setErrorMessage] = useState(false);
-    const navigate = useNavigate();
 
-  
-    const register = () => {
-        axios.post("http://localhost:8888/register", {
-            username: usernameReg,
-            password: passwordReg,
-        }).then((response) => {
-            console.log(response);
-        });
-    };
+    const navigate = useNavigate();
   
     const login = () => {
         if (username.length === 0 || password.length === 0){
@@ -36,17 +24,14 @@ const Login = () => {
             username: username,
             password: password,
         }).then((response) => {
-            // if login successful, transition to refine date page
-            // {
-            //    user: {
-                //      ...
-                // }
-            // }
-            if (response.data.userID === -1) {
-                setErrorMessage(true);
+            console.log('POST /login', response)
+
+            if (response.data.userInfo === -1) {
+                alert("Username and password did not match.");
+            } else if (response.status === 400) {
+                alert("Database error. Please try again.");
             } else {
-                // Save to memory
-                localStorage.setItem('userID', response.data.userID)
+                localStorage.setItem('userID', response.data.id)
                 navigate('/refine-date')
             }
         }).catch((err) => {
@@ -90,10 +75,6 @@ const Login = () => {
                         />
                     </Form.Group>
                     <div className="text-center mt-4">
-                        { errorMessage ? 
-                            <p style={{color: 'red'}}>Email and password combination incorrect</p>
-                            : <></>
-                        }
                         <Button 
                             variant="primary" 
                             // size="lg"

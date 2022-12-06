@@ -42,7 +42,7 @@ db.connect((err) => {
     const createUsersTable = `
         CREATE TABLE users (
             id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-            username VARCHAR(64) NOT NULL,
+            username VARCHAR(64) UNIQUE NOT NULL,
             name VARCHAR(64) NOT NULL,
             password VARCHAR(64) NOT NULL,
             answers VARCHAR(512),

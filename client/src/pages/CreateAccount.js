@@ -18,8 +18,7 @@ const CreateAccount = () => {
 
     const navigate = useNavigate();
 
-    // Priority 2: Need an onclick function to check that all fields are filled out, then POST all fields to backend
-    // url endpoint: http://localhost:8888/createAccount 
+    
     const createAcc = () => {
         // validate form
         for (let answer of answersArray){
@@ -35,7 +34,7 @@ const CreateAccount = () => {
         }
 
         console.log(JSON.stringify(answersArray))
-        
+
         //post if form is validated:
         axios.post("http://localhost:8888/createAccount", {
             name: nameCreate,
@@ -43,9 +42,7 @@ const CreateAccount = () => {
             password: passwordCreate,
             answers: JSON.stringify(answersArray),
         }).then((response) => {
-            //save to memory
-            localStorage.setItem('userInfo', response.data.userInfo)
-            navigate('/login')
+            navigate('/')
         }).catch((err) => {
             console.log(err);
         });        

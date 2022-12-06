@@ -23,11 +23,17 @@ router.post('/login', (req, res) => {
         "SELECT * FROM users WHERE username = ? AND password = ?",
         [username, password],
         (err, result) => {
-            if(err)
-                return console.log(err)
-            console.log(result)
+            if(err) {
+                res.status(400).send("Error querying user's info: ", err)
+            } else {
+                console.log('userinfo: ', typeof(result))
+                if(result === []) {
+                    res.status(200).send({message: 'User not found.', userInfo: -1})
+                }
+                res.status(200).send({ message: 'Successfully signed in.', userInfo: result})
+            }
         }
-    );
+    )
 })
 
 // POST /register
@@ -48,11 +54,17 @@ router.post('/createAccount', (req, res) => {
         "INSERT INTO users (username, name, password, answers) VALUES (?, ?, ?, ?)",
         [username, name, password, answers],
         (err, result) => {
-            if(err)
-                return console.log(err)
-            console.log(result)
+            if(err) {
+                console.log(err)
+                res.status(400).send('Error adding account to database: ', err)
+            } else {
+                const userInfo = {...req.body, score: score}
+                console.log('Successfully added ', userInfo)
+
+                res.status(200).send({ message: 'Successfully added user.', userInfo: userInfo})
+            }
         }
-    );
+    )
 })
 
 // POST /getSuggestion
